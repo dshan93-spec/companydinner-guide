@@ -10,32 +10,58 @@
     h1 { margin-top: 0; color: #b33; }
     h2 { margin-top: 28px; }
     .card { padding: 16px; border: 1px solid #eee; border-radius: 12px; margin: 14px 0; background: #fffaf7; }
-    .btn { display: inline-block; margin: 6px 8px 6px 0; padding: 10px 14px; border-radius: 10px; background: #0b63ce; color: white; text-decoration: none; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 10px; }
+    .menu { padding: 14px; border: 1px solid #eee; border-radius: 12px; background: #fff; }
+    .menu strong { color: #b33; }
+    .btn { display: inline-block; margin: 6px 8px 6px 0; padding: 11px 15px; border-radius: 10px; background: #0b63ce; color: white; text-decoration: none; font-weight: 650; }
+    .btn.call { background: #198754; }
     .note { color: #666; font-size: .95em; }
   </style>
 </head>
 <body>
   <main class="wrap">
     <h1>오늘 회식 안내</h1>
+
     <div class="card">
       <p><strong>시간:</strong> 오늘 오후 5시</p>
       <p><strong>장소:</strong> 대한민국삼겹살 기흥구청점</p>
       <p><strong>주소:</strong> 경기 용인시 기흥구 관곡로64번길 14-8</p>
+      <p><strong>대표전화:</strong> <a href="tel:050714930849">0507-1493-0849</a></p>
       <p><strong>주차:</strong> 주차 가능 장소 우선 기준으로 선정</p>
     </div>
 
-    <h2>추천 메뉴</h2>
-    <ul>
-      <li><strong>메인 메뉴:</strong> 생삼겹살</li>
-      <li><strong>추천 추가:</strong> 숙성목살, 김치찌개, 볶음밥</li>
-      <li><strong>주문 예시:</strong> 생삼겹살 중심으로 주문 후 인원에 따라 목살, 찌개, 볶음밥 추가</li>
-    </ul>
-
-    <h2>찾아오는 길</h2>
     <p>
-      <a class="btn" href="https://maps.google.com/?q=%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%82%BC%EA%B2%B9%EC%82%B4+%EA%B8%B0%ED%9D%A5%EA%B5%AC%EC%B2%AD%EC%A0%90" target="_blank" rel="noopener">Google 지도 열기</a>
-      <a class="btn" href="https://map.naver.com/v5/search/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%82%BC%EA%B2%B9%EC%82%B4%20%EA%B8%B0%ED%9D%A5%EA%B5%AC%EC%B2%AD%EC%A0%90" target="_blank" rel="noopener">네이버 지도 열기</a>
+      <a class="btn call" href="tel:050714930849">📞 전화하기</a>
+      <a class="btn" href="https://maps.google.com/?q=%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%82%BC%EA%B2%B9%EC%82%B4+%EA%B8%B0%ED%9D%A5%EA%B5%AC%EC%B2%AD%EC%A0%90" target="_blank" rel="noopener">Google 지도</a>
+      <a class="btn" href="https://map.naver.com/v5/search/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%82%BC%EA%B2%B9%EC%82%B4%20%EA%B8%B0%ED%9D%A5%EA%B5%AC%EC%B2%AD%EC%A0%90" target="_blank" rel="noopener">네이버 지도</a>
     </p>
+
+    <h2>추천 메뉴</h2>
+    <div class="menu-grid">
+      <div class="menu">
+        <strong>생삼겹살</strong>
+        <p>오늘 회식의 메인 메뉴입니다. 가장 무난하고 인원별 주문 조절이 쉬운 대표 메뉴입니다.</p>
+      </div>
+      <div class="menu">
+        <strong>숙성목살</strong>
+        <p>삼겹살과 함께 주문하면 고기 종류를 다양하게 즐길 수 있는 추천 추가 메뉴입니다.</p>
+      </div>
+      <div class="menu">
+        <strong>김치찌개</strong>
+        <p>고기 주문 후 식사 메뉴로 곁들이기 좋습니다.</p>
+      </div>
+      <div class="menu">
+        <strong>볶음밥</strong>
+        <p>마무리 식사 메뉴로 추천합니다.</p>
+      </div>
+    </div>
+
+    <h2>주문 가이드</h2>
+    <ul>
+      <li>기본은 생삼겹살 중심으로 주문</li>
+      <li>인원이 많으면 숙성목살을 함께 추가</li>
+      <li>식사 메뉴는 김치찌개와 볶음밥 추천</li>
+    </ul>
 
     <p class="note">참석 전 예약 및 주차 가능 여부는 매장에 최종 확인하는 것을 권장합니다.</p>
   </main>
