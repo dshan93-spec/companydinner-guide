@@ -3,67 +3,66 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>오늘 회식 안내</title>
+  <title>Company Dinner Guide</title>
   <style>
-    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; background: #f7f7f7; color: #222; line-height: 1.65; }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; background: #f6f8fb; color: #222; line-height: 1.65; }
     .wrap { max-width: 760px; margin: 24px auto; padding: 24px; background: white; border-radius: 18px; box-shadow: 0 8px 28px rgba(0,0,0,.08); }
-    h1 { margin-top: 0; color: #b33; }
+    h1 { margin-top: 0; color: #0b5cad; }
     h2 { margin-top: 28px; }
-    .card { padding: 16px; border: 1px solid #eee; border-radius: 12px; margin: 14px 0; background: #fffaf7; }
-    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 10px; }
-    .menu { padding: 14px; border: 1px solid #eee; border-radius: 12px; background: #fff; }
-    .menu strong { color: #b33; }
+    .card { padding: 16px; border: 1px solid #e8eef6; border-radius: 12px; margin: 14px 0; background: #f7fbff; }
     .btn { display: inline-block; margin: 6px 8px 6px 0; padding: 11px 15px; border-radius: 10px; background: #0b63ce; color: white; text-decoration: none; font-weight: 650; }
-    .btn.call { background: #198754; }
     .note { color: #666; font-size: .95em; }
+    li { margin: 6px 0; }
   </style>
 </head>
 <body>
   <main class="wrap">
-    <h1>오늘 회식 안내</h1>
+    <h1>Company Dinner Guide</h1>
+    <h2>기흥 회식 장소 변경 안내</h2>
 
     <div class="card">
-      <p><strong>시간:</strong> 오늘 오후 5시</p>
-      <p><strong>장소:</strong> 대한민국삼겹살 기흥구청점</p>
-      <p><strong>주소:</strong> 경기 용인시 기흥구 관곡로64번길 14-8</p>
-      <p><strong>대표전화:</strong> <a href="tel:050714930849">0507-1493-0849</a></p>
-      <p><strong>주차:</strong> 주차 가능 장소 우선 기준으로 선정</p>
+      <p><strong>장소:</strong> 청해수산 기흥구청 인근점</p>
+      <p><strong>위치:</strong> 기흥 / 기흥구청 인근</p>
+      <p><strong>참석 인원:</strong> 9명</p>
+      <p><strong>메뉴:</strong> 모둠회 + 매운탕 + 식사류</p>
+      <p><strong>일정:</strong> 추후 확정</p>
     </div>
 
     <p>
-      <a class="btn call" href="tel:050714930849">📞 전화하기</a>
-      <a class="btn" href="https://maps.google.com/?q=%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%82%BC%EA%B2%B9%EC%82%B4+%EA%B8%B0%ED%9D%A5%EA%B5%AC%EC%B2%AD%EC%A0%90" target="_blank" rel="noopener">Google 지도</a>
-      <a class="btn" href="https://map.naver.com/v5/search/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD%EC%82%BC%EA%B2%B9%EC%82%B4%20%EA%B8%B0%ED%9D%A5%EA%B5%AC%EC%B2%AD%EC%A0%90" target="_blank" rel="noopener">네이버 지도</a>
+      <a class="btn" href="https://map.naver.com/v5/search/%EC%B2%AD%ED%95%B4%EC%88%98%EC%82%B0%20%EA%B8%B0%ED%9D%A5%EA%B5%AC%EC%B2%AD" target="_blank" rel="noopener">네이버 지도에서 보기</a>
+      <a class="btn" href="https://maps.google.com/?q=%EC%B2%AD%ED%95%B4%EC%88%98%EC%82%B0+%EA%B8%B0%ED%9D%A5%EA%B5%AC%EC%B2%AD" target="_blank" rel="noopener">Google 지도에서 보기</a>
     </p>
 
-    <h2>추천 메뉴</h2>
-    <div class="menu-grid">
-      <div class="menu">
-        <strong>생삼겹살</strong>
-        <p>오늘 회식의 메인 메뉴입니다. 가장 무난하고 인원별 주문 조절이 쉬운 대표 메뉴입니다.</p>
-      </div>
-      <div class="menu">
-        <strong>숙성목살</strong>
-        <p>삼겹살과 함께 주문하면 고기 종류를 다양하게 즐길 수 있는 추천 추가 메뉴입니다.</p>
-      </div>
-      <div class="menu">
-        <strong>김치찌개</strong>
-        <p>고기 주문 후 식사 메뉴로 곁들이기 좋습니다.</p>
-      </div>
-      <div class="menu">
-        <strong>볶음밥</strong>
-        <p>마무리 식사 메뉴로 추천합니다.</p>
-      </div>
-    </div>
-
-    <h2>주문 가이드</h2>
+    <h2>선정 이유</h2>
     <ul>
-      <li>기본은 생삼겹살 중심으로 주문</li>
-      <li>인원이 많으면 숙성목살을 함께 추가</li>
-      <li>식사 메뉴는 김치찌개와 볶음밥 추천</li>
+      <li>기흥/기흥구청 인근으로 접근성이 좋습니다.</li>
+      <li>9명 회식 기준으로 모둠회 중심 구성이 무난합니다.</li>
+      <li>회 + 매운탕 + 식사류 조합으로 회식 메뉴 구성이 쉽습니다.</li>
     </ul>
 
-    <p class="note">참석 전 예약 및 주차 가능 여부는 매장에 최종 확인하는 것을 권장합니다.</p>
+    <h2>공지 문안</h2>
+    <div class="card">
+      <p>안녕하세요.</p>
+      <p>이번 회식 장소를 기흥 인근 횟집으로 변경하여 진행하고자 합니다.</p>
+      <ul>
+        <li>장소: 청해수산 기흥구청 인근점</li>
+        <li>참석 인원: 9명</li>
+        <li>메뉴: 모둠회 중심</li>
+        <li>일정: 추후 확정</li>
+      </ul>
+      <p>예약 전 세부 메뉴와 좌석 가능 여부를 확인한 뒤 최종 안내드리겠습니다.</p>
+    </div>
+
+    <h2>예약 체크리스트</h2>
+    <ul>
+      <li>참석 인원 확정: 9명</li>
+      <li>날짜 및 시간 확정</li>
+      <li>1인당 예산 확정</li>
+      <li>룸 또는 단체석 가능 여부 확인</li>
+      <li>주차 가능 여부 확인</li>
+    </ul>
+
+    <p class="note">실제 예약 전에는 영업 여부, 좌석 가능 여부, 주차 가능 여부를 매장에 최종 확인하는 것을 권장합니다.</p>
   </main>
 </body>
 </html>
