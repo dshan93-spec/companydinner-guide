@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Animal Galaxy Shooter</title>
+  <style>
+    html, body { margin:0; height:100%; overflow:hidden; background:#050816; font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color:white; }
+    #game { display:block; width:100vw; height:100vh; background: radial-gradient(circle at top, #1b2a6b 0%, #050816 58%, #02030a 100%); touch-action:none; }
+    .hud { position:fixed; top:12px; left:12px; right:12px; display:flex; justify-content:space-between; align-items:center; pointer-events:none; font-weight:700; text-shadow:0 2px 8px #000; }
+    .panel { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:14px; padding:8px 12px; backdrop-filter:blur(6px); }
+    .help { position:fixed; left:50%; bottom:16px; transform:translateX(-50%); text-align:center; font-size:14px; color:#d7e4ff; background:rgba(0,0,0,.25); border-radius:999px; padding:8px 14px; pointer-events:none; }
+    .overlay { position:fixed; inset:0; display:grid; place-items:center; background:rgba(2,3,10,.58); }
+    .box { width:min(88vw,440px); text-align:center; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); border-radius:22px; padding:26px; box-shadow:0 18px 60px rgba(0,0,0,.35); backdrop-filter:blur(10px); }
+    .box h1 { margin:0 0 8px; font-size:32px; }
+    .box p { color:#d7e4ff; line-height:1.55; }
+    button { border:0; border-radius:999px; padding:13px 22px; font-size:17px; font-weight:800; color:#061229; background:#79e7ff; cursor:pointer; box-shadow:0 8px 22px rgba(121,231,255,.3); }
+    button:active { transform:translateY(1px); }
+  </style>
+</head>
+<body>
+  <canvas id="game"></canvas>
+  <div class="hud"><div class="panel">점수: <span id="score">0</span></div><div class="panel">생명: <span id="lives">3</span></div></div>
+  <div class="help">PC: ← → 이동 / Space 발사 · 휴대폰: 드래그 이동 / 터치 발사</div>
+  <div class="overlay" id="overlay">
+    <div class="box">
+      <h1>🚀 Animal Galaxy</h1>
+      <p>귀여운 동물 친구들이 우주에서 내려옵니다.<br>하트 레이저로 안전하게 돌려보내세요!</p>
+      <button id="start">게임 시작</button>
+    </div>
+  </div>
+  <script>
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const livesEl = document.getElementById('lives');
+    const overlay = document.getElementById('overlay');
+    const startBtn = document.getElementById('start');
+
+    let W, H, dpr;
+    function resize(){
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      W = canvas.width = Math.floor(innerWidth * dpr);
+      H = canvas.height = Math.floor(innerHeight * dpr);
+      canvas.style.width = innerWidth + 'px';
+      canvas.style.height = innerHeight + 'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      W = innerWidth; H = innerHeight;
+      player.y = H - 72;
+    }
+
+    const player = { x: innerWidth/2, y: innerHeight-72, r: 22, speed: 7 };
+    let bullets=[], enemies=[], stars=[];
+    let score=0, lives=3, running=false, last=0, spawnTimer=0, shootCooldown=0;
+    const animals = ['🐶','🐱','🐰','🐼','🐨','🐯','🦊','🐸','🐵','🐹'];
+    const keys = {};
+
+    function makeStars(){
+      stars = Array.from({length:90}, () => ({ x:Math.random()*W, y:Math.random()*H, s:Math.random()*2+0.5, v:Math.random()*1.3+0.4 }));
+    }
+
+    function reset(){
+      score=0; lives=3; bullets=[]; enemies=[]; spawnTimer=0; shootCooldown=0;
+      player.x = W/2; player.y = H-72;
+      makeStars(); updateHud();
+    }
+
+    function updateHud(){ scoreEl.textContent=score; livesEl.textContent=lives; }
+
+    function shoot(){
+      if (!running || shootCooldown > 0) return;
+      bullets.push({x:player.x, y:player.y-26, r:7, v:9});
+      shootCooldown = 10;
+    }
+
+    function spawnEnemy(){
+      const size = 28 + Math.random()*18;
+      enemies.push({
+        x: 30 + Math.random()*(W-60),
+        y: -40,
+        r: size/2,
+        v: 1.2 + Math.random()*1.4 + score/900,
+        emoji: animals[Math.floor(Math.random()*animals.length)],
+        wobble: Math.random()*Math.PI*2
+      });
+    }
+
+    function drawPlayer(){
+      ctx.save();
+      ctx.translate(player.x, player.y);
+      ctx.font = '44px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('🚀', 0, 0);
+      ctx.restore();
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle = 'rgba(255,255,255,.85)';
+      for (const s of stars) {
+        ctx.globalAlpha = Math.min(1, s.s/2.5);
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, Math.PI*2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      for (const b of bullets) {
+        ctx.font = '22px serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('💖', b.x, b.y);
+      }
+      for (const e of enemies) {
+        ctx.font = Math.floor(e.r*2.1)+'px serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(e.emoji, e.x, e.y);
+      }
+      drawPlayer();
+    }
+
+    function update(){
+      if (keys.ArrowLeft || keys.a) player.x -= player.speed;
+      if (keys.ArrowRight || keys.d) player.x += player.speed;
+      if (keys[' '] || keys.Spacebar) shoot();
+      player.x = Math.max(28, Math.min(W-28, player.x));
+      if (shootCooldown>0) shootCooldown--;
+      for (const s of stars) { s.y += s.v; if (s.y > H) { s.y = 0; s.x = Math.random()*W; } }
+      spawnTimer--;
+      if (spawnTimer <= 0) { spawnEnemy(); spawnTimer = Math.max(22, 58 - Math.floor(score/120)); }
+      bullets.forEach(b => b.y -= b.v);
+      bullets = bullets.filter(b => b.y > -30);
+      enemies.forEach(e => { e.y += e.v; e.x += Math.sin(e.wobble += .035) * .55; });
+
+      for (let i=enemies.length-1;i>=0;i--) {
+        const e = enemies[i];
+        for (let j=bullets.length-1;j>=0;j--) {
+          const b = bullets[j];
+          const dx=e.x-b.x, dy=e.y-b.y;
+          if (dx*dx+dy*dy < (e.r+b.r)*(e.r+b.r)) {
+            enemies.splice(i,1); bullets.splice(j,1); score += 10; updateHud(); break;
+          }
+        }
+      }
+      for (let i=enemies.length-1;i>=0;i--) {
+        const e = enemies[i];
+        const dx=e.x-player.x, dy=e.y-player.y;
+        if (e.y > H+40 || dx*dx+dy*dy < (e.r+player.r)*(e.r+player.r)) {
+          enemies.splice(i,1); lives--; updateHud();
+          if (lives <= 0) endGame();
+        }
+      }
+    }
+
+    function loop(t){
+      if (!running) return;
+      last = t;
+      update(); draw();
+      requestAnimationFrame(loop);
+    }
+
+    function startGame(){ reset(); overlay.style.display='none'; running=true; requestAnimationFrame(loop); }
+    function endGame(){
+      running=false;
+      overlay.innerHTML = `<div class="box"><h1>게임 종료</h1><p>최종 점수: <strong>${score}</strong></p><button id="restart">다시 시작</button></div>`;
+      overlay.style.display='grid';
+      document.getElementById('restart').onclick = startGame;
+    }
+
+    addEventListener('keydown', e => { keys[e.key]=true; if(e.key===' ') e.preventDefault(); });
+    addEventListener('keyup', e => keys[e.key]=false);
+    canvas.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse' || e.buttons) player.x = e.clientX; });
+    canvas.addEventListener('pointerdown', e => { player.x = e.clientX; shoot(); });
+    startBtn.onclick = startGame;
+    addEventListener('resize', resize);
+    resize(); makeStars(); draw();
+  </script>
+</body>
+</html>
